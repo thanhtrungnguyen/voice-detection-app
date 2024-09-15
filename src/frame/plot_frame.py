@@ -28,12 +28,11 @@ class PlotFrame(ctk.CTkFrame):
             return
 
         # Call VoiceActivityDetector to get the plot
-        vad = VoiceActivityDetector(self.playing_sound)
+        vad = VoiceActivityDetector(self.playing_sound)  # Pass the file path to VAD
         vad.detect_speech()  # Run the detection to generate data
 
         # Create a figure for the plot
-        fig = plt.Figure(figsize=(8, 4))
-        ax = fig.add_subplot(111)
+        fig, ax = plt.subplots(figsize=(8, 4))
 
         # Plot the detected speech regions (customize based on VoiceActivityDetector logic)
         vad.plot_detected_speech_regions()
@@ -44,3 +43,6 @@ class PlotFrame(ctk.CTkFrame):
         self.canvas = FigureCanvasTkAgg(fig, master=self)
         self.canvas.draw()
         self.canvas.get_tk_widget().pack(padx=10, pady=10)
+
+        # Update label for current sound
+        self.current_playing_label.configure(text=f"Plot for: {self.playing_sound.path}")

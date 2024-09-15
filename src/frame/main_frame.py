@@ -29,12 +29,10 @@ class MainFrame(ctk.CTk):
         # Create the PlotFrame as part of MainFrame but initially hidden
         self.plot_frame = PlotFrame(self, self.playing_sound)
 
-    def update_playing_info(self):
-        # Update the label with the current sound path and progress
-        self.current_playing_label.configure(
-            text=f"Playing: {self.playing_sound.path} | Progress: {self.playing_sound.progress:.2f}s"
-        )
+        self.update_playing_info()
+        self.show_plot()
 
+    def update_playing_info(self):
         # Initialize the VoiceActivityDetector when a new sound is played
         # if self.playing_sound.path and not self.voice_activity_detector:
         #     self.voice_activity_detector = VoiceActivityDetector(self.playing_sound)

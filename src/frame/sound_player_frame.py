@@ -17,6 +17,7 @@ class SoundPlayer(ctk.CTkFrame):
         self.place(x=0, y=0, relwidth=0.3, relheight=1)
 
         # State variables
+        self.parent = parent  # Reference to MainFrame
         self.current_position = 0
         self.paused = False
         self.selected_folder_path = ""
@@ -97,10 +98,13 @@ class SoundPlayer(ctk.CTkFrame):
             full_path = os.path.join(self.selected_folder_path, selected_sound)
 
             # Update the PlayingSound object with the current file path
-            self.playing_sound.path = selected_sound
+            self.playing_sound.path = full_path
             self.playing_sound.progress = 0  # Reset progress
 
             self.load_and_play_sound(full_path)
+
+            # Notify MainFrame to show the plot
+            self.parent.show_plot()  # Trigger the plot when sound starts playing
 
     def load_and_play_sound(self, filepath):
         file_extension = os.path.splitext(filepath)[1].lower()
