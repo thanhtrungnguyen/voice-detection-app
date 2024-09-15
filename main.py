@@ -1,5 +1,5 @@
-from ui import App
+from main_frame import MainFrame
 
 if __name__ == '__main__':
-    app = App()
-    # app.mainloop()
+    app = MainFrame()
+    app.mainloop()
