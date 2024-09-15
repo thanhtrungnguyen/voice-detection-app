@@ -25,7 +25,9 @@ class MainFrame(ctk.CTk):
         self.playing_sound = PlayingSound()
 
         self.sound_player = SoundPlayer(self, self.playing_sound)
-        self.plot_data = PlotFrame(self, self.playing_sound)
+
+        # Create the PlotFrame as part of MainFrame but initially hidden
+        self.plot_frame = PlotFrame(self, self.playing_sound)
 
     def update_playing_info(self):
         # Update the label with the current sound path and progress
@@ -39,4 +41,10 @@ class MainFrame(ctk.CTk):
         #     self.voice_activity_detector.plot_detected_speech_regions()
 
         self.after(1000, self.update_playing_info)  # Update every second
+
+    def show_plot(self):
+        # Display the plot when a sound starts playing
+        self.plot_frame.lift()
+        self.plot_frame.display_plot()  # Call the method to generate and show the graph
+
 

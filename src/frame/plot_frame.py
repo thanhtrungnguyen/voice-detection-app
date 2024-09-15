@@ -10,6 +10,7 @@ from src.service.voice_activity_detector import VoiceActivityDetector
 class PlotFrame(ctk.CTkFrame):
     def __init__(self, parent, playing_sound):
         super().__init__(parent)
+        self.place(relx=0.3, y=0, relwidth=0.7, relheight=1)
 
         # Store the PlayingSound object
         self.playing_sound = playing_sound
