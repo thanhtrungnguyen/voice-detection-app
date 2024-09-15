@@ -3,8 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-from model.playing_sound import PlayingSound
-from service.voice_activity_detector import VoiceActivityDetector
+from src.model.playing_sound import PlayingSound
+from src.service.voice_activity_detector import VoiceActivityDetector
 
 
 class PlotFrame(ctk.CTkFrame):

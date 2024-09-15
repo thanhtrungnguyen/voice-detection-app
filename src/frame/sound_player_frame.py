@@ -8,7 +8,7 @@ from tkinter.ttk import Progressbar
 from mutagen.mp3 import MP3
 import customtkinter as ctk
 
-from model.playing_sound import PlayingSound
+from src.model.playing_sound import PlayingSound
 
 
 class SoundPlayer(ctk.CTkFrame):

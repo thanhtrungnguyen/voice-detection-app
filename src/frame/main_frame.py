@@ -1,9 +1,9 @@
 import customtkinter as ctk
 import pygame
 
-from frame.plot_frame import PlotFrame
-from frame.sound_player_frame import SoundPlayer
-from model.playing_sound import PlayingSound
+from src.frame.plot_frame import PlotFrame
+from src.frame.sound_player_frame import SoundPlayer
+from src.model.playing_sound import PlayingSound
 
 # Set the appearance and theme of the window
 ctk.set_appearance_mode('Light')
