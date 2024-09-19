@@ -103,14 +103,22 @@ their waveform, and see sections of the audio that contain speech activity.
     │   ├── models/
     │   │   └── audio_model.py
     │   ├── views/
-    │   │   └── audio_view.py
+    │   │   ├── main_frame.py
+    │   │   ├── audio_player_frame.py
+    │   │   └── plot_frame.py
+    │   ├── utils/
+    │   │   └── logger.py
     │   ├── services/
     │   │   └── vad_service.py
+    │   ├── tests/
+    │   │   ├── test_audio_model.py
+    │   │   └── test_vad_service.py
     │   └── main.py
     │
     ├── README.md
     ├── requirements.txt
-    └── .pylintrc
+    ├── .pylintrc
+    └── .gitignore
 
     ```
 
