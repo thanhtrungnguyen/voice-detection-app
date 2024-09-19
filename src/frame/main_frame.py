@@ -4,6 +4,7 @@ import pygame
 from src.frame.plot_frame import PlotFrame
 from src.frame.sound_player_frame import SoundPlayer
 from src.model.playing_sound import PlayingSound
+from src.service.voice_activity_detector import VoiceActivityDetector
 
 # Set the appearance and theme of the window
 ctk.set_appearance_mode('Light')
@@ -19,6 +20,7 @@ pygame.mixer.init()
 class MainFrame(ctk.CTk):
     def __init__(self):
         super().__init__()
+        self.voice_activity_detector = None
         self.title("Voice Activity Detection")
         self.geometry(f"{APP_WIDTH}x{APP_HEIGHT}")
 
@@ -30,7 +32,7 @@ class MainFrame(ctk.CTk):
         self.plot_frame = PlotFrame(self, self.playing_sound)
 
         self.update_playing_info()
-        self.show_plot()
+        # self.show_plot()
 
     def update_playing_info(self):
         # Initialize the VoiceActivityDetector when a new sound is played
@@ -38,7 +40,7 @@ class MainFrame(ctk.CTk):
         #     self.voice_activity_detector = VoiceActivityDetector(self.playing_sound)
         #     self.voice_activity_detector.plot_detected_speech_regions()
 
-        self.after(1000, self.update_playing_info)  # Update every second
+        self.after(100, self.update_playing_info)  # Update every second
 
     def show_plot(self):
         # Display the plot when a sound starts playing
