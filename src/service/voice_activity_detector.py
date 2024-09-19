@@ -226,27 +226,62 @@ class VoiceActivityDetector:
 
         return speech_time
 
-    def plot_detected_speech_regions(self) -> 'VoiceActivityDetector':
-        """
-        Plots the original signal and detected speech regions.
+    # def plot_detected_speech_regions(self) -> 'VoiceActivityDetector':
+    #     """
+    #     Plots the original signal and detected speech regions.
+    #
+    #     :return: self for method chaining.
+    #     """
+    #     data: np.ndarray = self.data
+    #     detected_windows: np.ndarray = self.detect_speech()  # Detect speech regions
+    #     data_speech: np.ndarray = np.zeros(len(data))  # Initialize array to store detected speech
+    #
+    #     # Highlight detected speech regions by multiplying original signal with speech flags
+    #     it = np.nditer(detected_windows[:, 0], flags=['f_index'])
+    #     while not it.finished:
+    #         data_speech[int(it[0])] = data[int(it[0])] * detected_windows[it.index, 1]
+    #         it.iternext()
+    #     # Plot the original signal and detected speech regions for visualization
+    #     plt.figure()
+    #     plt.plot(data_speech)  # Plot detected speech regions
+    #     plt.plot(data)         # Plot original signal
+    #     plt.show()
+    #     return self
 
-        :return: self for method chaining.
-        """
-        data: np.ndarray = self.data
-        detected_windows: np.ndarray = self.detect_speech()  # Detect speech regions
-        data_speech: np.ndarray = np.zeros(len(data))  # Initialize array to store detected speech
+    def plot_detected_speech_regions(self, ax):
+        """Plots the detected speech regions on the provided matplotlib axes with more details."""
+        # Prepare data for plotting
+        data = self.data  # Original audio data
+        detected_windows = self.detect_speech()  # Speech detection results
 
-        # Highlight detected speech regions by multiplying original signal with speech flags
-        it = np.nditer(detected_windows[:, 0], flags=['f_index'])
-        while not it.finished:
-            data_speech[int(it[0])] = data[int(it[0])] * detected_windows[it.index, 1]
-            it.iternext()
-        # Plot the original signal and detected speech regions for visualization
-        plt.figure()
-        plt.plot(data_speech)  # Plot detected speech regions
-        plt.plot(data)         # Plot original signal
-        plt.show()
-        return self
+        # Create a speech-detected version of the data
+        data_speech = np.zeros_like(data)
+        for start, speech_flag in detected_windows:
+            if speech_flag == 1:  # Speech detected
+                data_speech[int(start)] = data[int(start)]
+
+        # Plot the original signal and detected speech regions
+        ax.plot(data, label="Original Signal", color='blue', alpha=0.5)
+        ax.plot(data_speech, label="Detected Speech", color='red')
+
+        # Add labels and title for clarity
+        ax.set_title("Voice Activity Detection")
+        ax.set_xlabel("Time (samples)")
+        ax.set_ylabel("Amplitude")
+
+        # Highlight the speech regions with shaded areas for better visualization
+        speech_indices = np.where(data_speech != 0)[0]  # Get indices where speech is detected
+        for start in speech_indices:
+            ax.axvspan(start, start + len(data_speech) / len(detected_windows), color='red', alpha=0.1)
+
+        # Add gridlines for better reading of the plot
+        ax.grid(True)
+
+        # Add a legend to describe the plot elements
+        ax.legend()
+
+        # Optionally: Make the plot interactive (zooming, etc.)
+        plt.tight_layout()
 
     def detect_speech(self) -> np.ndarray:
         """
@@ -276,7 +311,13 @@ class VoiceActivityDetector:
             # Sum the total energy across all frequencies
             sum_full_energy: float = sum(energy_freq.values())
             # Calculate the ratio of speech band energy to total energy
-            speech_ratio: float = sum_voice_energy / sum_full_energy
+            speech_ratio: float = 0
+
+            # Check for zero before dividing
+            if sum_full_energy == 0:
+                speech_ratio = 0  # Set speech_ratio to 0 if there's no full energy
+            else:
+                speech_ratio = sum_voice_energy / sum_full_energy
 
             # If the ratio exceeds the threshold, flag this window as containing speech
             speech_ratio = speech_ratio > self.speech_energy_threshold

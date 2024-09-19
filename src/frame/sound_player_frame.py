@@ -14,7 +14,7 @@ from src.model.playing_sound import PlayingSound
 class SoundPlayer(ctk.CTkFrame):
     def __init__(self, parent, playing_sound: PlayingSound):
         super().__init__(parent)
-        self.place(x=0, y=0, relwidth=0.3, relheight=1)
+        self.place(x=0, y=0, relwidth=0.25, relheight=1)
 
         # State variables
         self.parent = parent  # Reference to MainFrame
@@ -34,18 +34,18 @@ class SoundPlayer(ctk.CTkFrame):
 
     def create_widgets(self):
         # Create and configure the listbox
-        self.listbox = tk.Listbox(self, font=("TkDefaultFont", 16))
+        self.listbox = tk.Listbox(self, font=("TkDefaultFont", 12))
 
         # Create and configure the progressbar
         self.progressbar = Progressbar(self, length=300, mode="determinate")
 
         # Create buttons
         btn_select_folder = ctk.CTkButton(self, text="Select Sounds Folder", command=self.select_sounds_folder,
-                                          font=("TkDefaultFont", 18))
-        btn_previous = ctk.CTkButton(self, text="Previous", command=self.previous_sound, font=("TkDefaultFont", 18))
-        btn_play = ctk.CTkButton(self, text="Play", command=self.play_sounds, font=("TkDefaultFont", 18))
-        btn_pause = ctk.CTkButton(self, text="Pause", command=self.pause_sound, font=("TkDefaultFont", 18))
-        btn_next = ctk.CTkButton(self, text="Next", command=self.next_sound, font=("TkDefaultFont", 18))
+                                          font=("TkDefaultFont", 12))
+        btn_previous = ctk.CTkButton(self, text="Previous", command=self.previous_sound, font=("TkDefaultFont", 12))
+        btn_play = ctk.CTkButton(self, text="Play", command=self.play_sounds, font=("TkDefaultFont", 12))
+        btn_pause = ctk.CTkButton(self, text="Pause", command=self.pause_sound, font=("TkDefaultFont", 12))
+        btn_next = ctk.CTkButton(self, text="Next", command=self.next_sound, font=("TkDefaultFont", 12))
 
         # Layout configuration
         self.columnconfigure((0, 1, 2, 3), weight=1, uniform='a')
