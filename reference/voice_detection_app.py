@@ -55,24 +55,32 @@ class VoiceDetectionApp:
     def create_figure(self):
         """Create a figure with three subplots for waveform, RMS energy, and spectrogram."""
         fig = Figure(figsize=(8, 6), dpi=100)
+
+        # Waveform subplot
         ax_waveform = fig.add_subplot(311)
         ax_waveform.set_ylim(-32768, 32767)
         ax_waveform.set_xlim(0, self.chunk)
         ax_waveform.set_ylabel("Amplitude")
+        ax_waveform.set_xlabel("Waveform (Amplitude)")  # Nhãn dưới chân
         ax_waveform.set_title("Waveform")
 
+        # RMS Energy subplot
         ax_energy = fig.add_subplot(312)
         ax_energy.set_ylim(0, 1)
         ax_energy.set_xlim(0, 100)
         ax_energy.set_ylabel("RMS Energy")
+        ax_energy.set_xlabel("RMS Energy (Normalized)")  # Nhãn dưới chân
         ax_energy.set_title("RMS Energy")
 
+        # Spectrogram subplot
         ax_spectrogram = fig.add_subplot(313)
         ax_spectrogram.set_ylim(0, self.fs // 2)
         ax_spectrogram.set_xlim(0, 100)
         ax_spectrogram.set_ylabel("Frequency (Hz)")
-        ax_spectrogram.set_xlabel("Time")
+        ax_spectrogram.set_xlabel("Spectrogram (Frequency in Hz)")  # Nhãn dưới chân
         ax_spectrogram.set_title("Spectrogram")
+
+        fig.tight_layout()  # Căn chỉnh layout để không bị chồng chéo giữa các nhãn và biểu đồ
 
         return fig, ax_waveform, ax_energy, ax_spectrogram
 
@@ -96,7 +104,7 @@ class VoiceDetectionApp:
 
     def process_audio(self):
         while self.running:
-            data = self.stream.read(self.chunk)
+            data = self.stream.read(self.chunk, exception_on_overflow=False)
             np_data = np.frombuffer(data, dtype=np.int16)
 
             # Update waveform data

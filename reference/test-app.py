@@ -80,8 +80,8 @@ class AudioAnalyzerApp(ctk.CTk):
         self.canvas.draw()
         self.canvas.get_tk_widget().pack(fill='both', expand=True)
 
-        # Clear the plot after embedding it in the Tkinter window
-        plt.clf()
+        # # Clear the plot after embedding it in the Tkinter window
+        # plt.clf()
 
 
 if __name__ == "__main__":

@@ -70,6 +70,7 @@ class RealTimeVADApp:
 
     def perform_vad(self, audio_chunk):
         """Perform VAD on audio chunk using energy thresholding"""
+        # Ensure that audio_chunk is a numpy array
         energy = librosa.feature.rms(y=audio_chunk)[0]
         threshold = np.mean(energy) * ENERGY_THRESHOLD_FACTOR
         vad = (energy > threshold).astype(int)
