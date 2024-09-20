@@ -61,7 +61,8 @@ class PlotFrame(ctk.CTkFrame):
 
         # Redraw the canvas
         self.fig.tight_layout()
-        self.canvas.draw()
+        # self.canvas.draw()
+        self.canvas.draw_idle()
 
     def update_playback_position(self, current_time):
         """Update the position of the playback line in both the waveform and energy plots."""

@@ -81,6 +81,8 @@ class AudioPlayerFrame(ctk.CTkFrame):
 
     def format_time(self, seconds):
         """Convert seconds to a MM:SS string format."""
+        if seconds < 0:
+            seconds = 0
         minutes = int(seconds // 60)
         seconds = int(seconds % 60)
         return f"{minutes:02d}:{seconds:02d}"

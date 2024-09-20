@@ -5,6 +5,7 @@ class AudioPlayerController:
         self.audio_frame = audio_frame
         self.plot_frame = plot_frame
         self.current_audio_file = None
+        self.update_interval = 50
 
     def load_audio(self, file_name):
         """Load the selected audio file and prepare to plot."""
@@ -18,6 +19,7 @@ class AudioPlayerController:
             self.model.play_pause()
             if self.model.is_playing:
                 self.update_playback_line()
+                self.update_progress_bar()
 
     def plot_audio(self):
         """Plot the waveform and VAD results."""
@@ -32,7 +34,7 @@ class AudioPlayerController:
             self.plot_frame.update_playback_position(current_time)
 
             # Schedule the next update after 100ms
-            self.plot_frame.after(5, self.update_playback_line)
+            self.plot_frame.after(self.update_interval, self.update_playback_line)
 
     def update_progress_bar(self):
         """Update the progress bar and time labels every 100ms."""
@@ -42,7 +44,7 @@ class AudioPlayerController:
             self.audio_frame.update_progress_bar(current_time, total_time)
 
             # Schedule the next update after 100ms
-            self.audio_frame.after(100, self.update_progress_bar)
+            self.audio_frame.after(self.update_interval, self.update_progress_bar)
 
     def seek_audio(self, new_time):
         """Seek the audio to a new position."""
